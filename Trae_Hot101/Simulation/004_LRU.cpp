@@ -36,15 +36,15 @@ public:
       cache_list_.splice(cache_list_.begin(), cache_list_, it->second);
       return;
     }
-    // 如果没有就新建一个
-    cache_list_.push_front({key, value});
-    cache_map_[key] = cache_list_.begin();
     // 如果满了就删除尾巴
-    if (cache_list_.size() > capacity_) {
+    if (cache_list_.size() >= capacity_) {
       int back_key = cache_list_.back().first;
       cache_list_.pop_back();
       cache_map_.erase(back_key);
     }
+    // 如果没有就新建一个
+    cache_list_.push_front({key, value});
+    cache_map_[key] = cache_list_.begin();
     return;
   }
 };
